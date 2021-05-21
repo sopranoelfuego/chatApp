@@ -1,5 +1,5 @@
 import { gql } from 'apollo-server-express'
-import * as user from './userTypes.js'
+import * as user from './userSchema.js'
 
 const types = []
 const queries = []
@@ -13,12 +13,12 @@ schemas.forEach((single) => {
  mutations.push(single.mutations)
 })
 
-export const typesDefs = gql`
+export const typeDefs = gql`
   ${types.join('\n')}
  type Query{
     ${queries.join('\n')}
  }
- type mutations{
+ type Mutation{
      ${mutations.join('\n')}
  }
 

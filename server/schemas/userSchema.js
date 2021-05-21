@@ -4,27 +4,28 @@ export const types = `
       id:ID!
       username: String!
       email:String!
+      password:String!
       
   }
-  type inputUser{
+  input inputUser{
     username: String!
     email:String!
     password:String!
 
   }
-  type loginUser{
+  input loginUser{
       email:String!
       password:String!
   }
 
 `
 export const queries = `
-   user(id:ID):User!
+    user(id:ID):User!
     users:[User]!
 
 `
 export const mutations = `
-   register(input:inputUser!):String!
+   register (input:inputUser!):String!
    loginUser(input:loginUser!):String!
    
 `

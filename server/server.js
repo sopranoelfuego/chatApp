@@ -7,24 +7,25 @@ import models from './models/index.js'
 import { info } from './utils/log.js'
 
 console.log(models)
-// import { typesDefs } from './typesDefs/index.js'
+import { typeDefs } from './schemas/index.js'
+import { resolvers } from './resolvers/index.js'
 const app = express()
 const NAMESPACE = 'SERVER'
 // loading variables
 dotenv.config()
 // Construct a schema, using GraphQL schema language
-const typeDefs = gql`
- type Query {
-  hello: String
- }
-`
+// const typeDefs = gql`
+//  type Query {
+//   hello: String
+//  }
+// `
 
 // Provide resolver functions for your schema fields
-const resolvers = {
- Query: {
-  hello: () => 'Hello world!',
- },
-}
+// const resolvers = {
+//  Query: {
+//   hello: () => 'Hello world!',
+//  },
+// }
 //start db
 dbConnect()
 const server = new ApolloServer({ typeDefs, resolvers, models })
