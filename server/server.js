@@ -13,22 +13,9 @@ const app = express()
 const NAMESPACE = 'SERVER'
 // loading variables
 dotenv.config()
-// Construct a schema, using GraphQL schema language
-// const typeDefs = gql`
-//  type Query {
-//   hello: String
-//  }
-// `
 
-// Provide resolver functions for your schema fields
-// const resolvers = {
-//  Query: {
-//   hello: () => 'Hello world!',
-//  },
-// }
-//start db
 dbConnect()
-const server = new ApolloServer({ typeDefs, resolvers, models })
+const server = new ApolloServer({ typeDefs, resolvers, context: { models } })
 
 server.applyMiddleware({ app })
 const PORT = process.env.PORT || 5001

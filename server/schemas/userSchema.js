@@ -1,10 +1,11 @@
 export const types = `
 
   type User{
-      id:ID!
+      _id:ID!
       username: String!
       email:String!
-      password:String!
+      password:String
+      imageUrl:String
       
   }
   input inputUser{
@@ -22,10 +23,13 @@ export const types = `
 export const queries = `
     user(id:ID):User!
     users:[User]!
+    
 
 `
 export const mutations = `
-   register (input:inputUser!):String!
-   loginUser(input:loginUser!):String!
+   register (input:inputUser!):User!
+   loginUser(input:loginUser!):User!
+   
+   
    
 `

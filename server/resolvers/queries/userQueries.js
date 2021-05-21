@@ -5,8 +5,9 @@ import { ApolloError, ValidationError } from 'apollo-server-express'
 loginUser
  * */
 
-export const users = async (_, {}, { User }) => {
- User.find({})
+export const users = async (_, {}, { models }) => {
+ const { User } = models
+ return User.find()
   .then((result) => {
    return result
   })
