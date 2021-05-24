@@ -1,14 +1,20 @@
 import { ApolloError } from 'apollo-server-express'
+import { errorHandler } from '../../utils/error.js'
 
 export const register = async (_, { input }, { models }) => {
  const { User } = models
- const user = new User(input)
+ const { email, username, password } = input
+ const user = new User({ email, username, password })
+
  return user
   .save()
   .then((result) => {
    return { ...result._doc }
   })
-  .catch((err) => new ApolloError(err.message))
+  .catch((err) => {
+   console.log(err)
+   new ApolloError(err.message)
+  })
 }
 
 export const deleteUsers = async (_, {}, { models }) => {

@@ -4,7 +4,7 @@ export const types = `
       _id:ID!
       username: String!
       email:String!
-      password:String
+      password:String!
       imageUrl:String
       
   }
@@ -26,6 +26,7 @@ export const types = `
 export const queries = `
     user(id:ID):User!
     users:[User]!
+    login(input:loginUser!):User!
     
     
 
