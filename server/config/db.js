@@ -6,6 +6,7 @@ const dbConnect = async () =>
   .connect(process.env.MONGO_URI, {
    useNewUrlParser: true,
    useUnifiedTopology: true,
+   useCreateIndex: true,
   })
   .then((conn) =>
    info(

@@ -1,3 +1,3 @@
-import { user, users } from './userQueries.js'
+import { user, users, login } from './userQueries.js'
 
-export default { user, users }
+export default { user, users, login }

@@ -1,22 +1,26 @@
-import { ApolloError, ValidationError } from 'apollo-server-express'
-/**
- * 
- * register 
-loginUser
- * */
+import bcrypt from 'bcrypt'
+import {
+ ApolloError,
+ ValidationError,
+ UserInputError,
+ AuthenticationError,
+} from 'apollo-server-express'
 
-export const login = async(_, { input }, { models }){
-  const {User}= models
-  const{email, password}= input
-  const user=await User.find({where:{email}})
-  if(!user){
-    return new ApolloError("user doesn't exist...")
-  }
-  const rightPassword=await user.passwordVerification(password)
-  if(!rightPassword){
-    return new ApolloError("wrong password...")
-  }
-  
+export const login = async (_, { input }, { models }) => {
+ const { User } = models
+ const { email, password } = input
+
+ return User.find({ email })
+  .then((user) => {
+   const match = user.matchPassword(password)
+   if (!match) {
+    return new AuthenticationError('wrong password')
+   }
+   return user
+  })
+  .catch((err) => {
+   return new ApolloError('wrong email..')
+  })
 }
 
 export const users = async (_, {}, { models }) => {

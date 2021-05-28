@@ -21,6 +21,7 @@ export const types = `
       email:String!
       password:String!
   }
+  
 
 `
 export const queries = `

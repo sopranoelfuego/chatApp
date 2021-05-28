@@ -6,7 +6,6 @@ import colors from 'colors'
 import models from './models/index.js'
 import { info } from './utils/log.js'
 
-console.log(models)
 import { typeDefs } from './schemas/index.js'
 import { resolvers } from './resolvers/index.js'
 const app = express()
