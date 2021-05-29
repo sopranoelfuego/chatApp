@@ -1,4 +1,4 @@
-import bcrypt from 'bcrypt'
+import User from '../../models/userModel.js'
 import {
  ApolloError,
  ValidationError,
@@ -6,36 +6,45 @@ import {
  AuthenticationError,
 } from 'apollo-server-express'
 
-export const login = async (_, { input }, { models }) => {
- const { User } = models
+export const login = async (_, { input }, context) => {
+ console.log(context)
+
  const { email, password } = input
 
- return User.find({ email })
-  .then((user) => {
-   const match = user.matchPassword(password)
-   if (!match) {
-    return new AuthenticationError('wrong password')
-   }
-   return user
-  })
-  .catch((err) => {
-   return new ApolloError('wrong email..')
-  })
+ const user = await User.findOne({ email })
+
+ if (!user) {
+  return new ApolloError('wrong email... or unknow email')
+ }
+ const isMatch = user.matchPassword(password)
+
+ if (!isMatch) {
+  return new ApolloError('wrong password...')
+ }
+ return {
+  ...user.toJSON(),
+  token: user.signWithToken(),
+  createdAt: user.createdAt.toISOString(),
+ }
 }
 
-export const users = async (_, {}, { models }) => {
- const { User } = models
- return User.find()
+export const users = async (_, {}, context) => {
+ return User.find({})
   .then((result) => {
-   return result
+   return result.map((user) => {
+    return { ...user.toJSON(), createdAt: user.createdAt.toISOString() }
+   })
   })
   .catch((err) => new ApolloError(err.err))
 }
 
-export const user = async (_, { id }, { User }) => {
- User.findById(id)
-  .then((result) => {
-   return result || new ValidationError('there is no user with such id')
+export const user = async (_, { id }, context) => {
+ return User.findById(id)
+  .then((user) => {
+   return (
+    { ...user.toJSON(), createdAt: user.createdAt.toISOString() } ||
+    new ValidationError('there is no user with such id')
+   )
   })
   .catch((err) => new ApolloError(err.message))
 }

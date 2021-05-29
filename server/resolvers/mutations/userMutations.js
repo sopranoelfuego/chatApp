@@ -1,8 +1,6 @@
 import { ApolloError } from 'apollo-server-express'
-import { errorHandler } from '../../utils/error.js'
-
+import User from '../../models/userModel.js'
 export const register = async (_, { input }, { models }) => {
- const { User } = models
  const { email, username, password } = input
  const user = new User({ email, username, password })
 
@@ -19,15 +17,13 @@ export const register = async (_, { input }, { models }) => {
 
 export const deleteUsers = async (_, {}, { models }) => {
  const { User } = models
- await User.deleteMany()
-
- return { message: 'deleted successfully...' }
+ await User.remove({})
 }
 export const deleteUser = async (_, { id }, { models }) => {
  const { User } = models
-
- return User.findByIdAndDelete(id, (err, doc) => {
-  if (err) return new ApolloError(err.message)
-  return { message: 'user deleted..' }
- })
+ return User.findByIdAndDelete(id)
+  .then((result) => {
+   return result
+  })
+  .catch((err) => new ApolloError(err.message))
 }

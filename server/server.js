@@ -14,7 +14,16 @@ const NAMESPACE = 'SERVER'
 dotenv.config()
 
 dbConnect()
-const server = new ApolloServer({ typeDefs, resolvers, context: { models } })
+const server = new ApolloServer({
+ typeDefs,
+ resolvers,
+ context: (ctx) => {
+  return {
+   ctx,
+   models,
+  }
+ },
+})
 
 server.applyMiddleware({ app })
 const PORT = process.env.PORT || 5001

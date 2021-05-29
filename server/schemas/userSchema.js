@@ -6,6 +6,9 @@ export const types = `
       email:String!
       password:String!
       imageUrl:String
+      token:String
+      createdAt:String
+      updatedAt:String
       
   }
   type Response{
@@ -35,7 +38,7 @@ export const queries = `
 export const mutations = `
    register (input:inputUser!):User!
    loginUser(input:loginUser!):User!
-   deleteUser(id:ID):Response!
+   deleteUser(id:ID):User!
    deleteUsers:Response!
    
    
