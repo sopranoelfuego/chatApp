@@ -9,7 +9,6 @@ import bcrypt from 'bcryptjs'
 
 export const login = async (_, { input }, ctx) => {
  console.log(ctx)
-
  const { email, password } = input
 
  const user = await User.findOne({ email })

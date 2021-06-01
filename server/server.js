@@ -1,9 +1,15 @@
-import { ApolloServer, gql } from 'apollo-server-express'
+import {
+ ApolloServer,
+ gql,
+ AuthenticationError,
+ ApolloError,
+} from 'apollo-server-express'
 import express from 'express'
 import dotenv from 'dotenv'
 import dbConnect from './config/db.js'
 import colors from 'colors'
-import models from './models/index.js'
+import jwt from 'jsonwebtoken'
+import User from './models/userModel.js'
 import { info } from './utils/log.js'
 
 import { typeDefs } from './schemas/index.js'
@@ -18,8 +24,26 @@ const server = new ApolloServer({
  typeDefs,
  resolvers,
  context: ({ req }) => {
-  const authorization = req.headers.authorization || ''
-  console.log(authorization)
+  console.log(req)
+  let token
+  if (
+   req.headers.authorization &&
+   req.headers.authorization.startsWith('Bearer')
+  ) {
+   token = req.headers.authorization.split('Bearer ')[1]
+  }
+  if (!token) {
+   return new ApolloError('loggin first')
+  }
+
+  const decode = jwt.verify(token, process.env.JWT_SECRET)
+  console.log(decode)
+  return User.find(decode.id)
+   .then((result) => {
+    return result
+   })
+   .catch((err) => new ApolloError(err.message))
+  token && console.log(token)
  },
 })
 
