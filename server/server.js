@@ -17,11 +17,9 @@ dbConnect()
 const server = new ApolloServer({
  typeDefs,
  resolvers,
- context: (ctx) => {
-  return {
-   ctx,
-   models,
-  }
+ context: ({ req }) => {
+  const authorization = req.headers.authorization || ''
+  console.log(authorization)
  },
 })
 
