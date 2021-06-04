@@ -25,6 +25,7 @@ const server = new ApolloServer({
  resolvers,
  context: async({req})=>{
    let token,decode
+
   if(req.headers.authorization ){
     
      token=req.headers.authorization.split('Bearer ')[1]
