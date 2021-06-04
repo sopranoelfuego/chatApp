@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 function Signin() {
     
@@ -33,7 +34,7 @@ function Signin() {
                  </div>
                  <button type="submit" className="btn btn-primary my-2">sign</button>
                  <div>
-                     you are new create a account? <a href="#">register now</a>
+                     you are new create a account? <Link to="/Signup">register now</Link>
                  </div>
              </form>
             </div>

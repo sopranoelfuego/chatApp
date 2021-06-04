@@ -1,9 +1,9 @@
 import React from 'react'
-import Home from './components/home/Home'
-import Footer from "./components/footer/Footer"
-import Header from  "./components/header/Header"
-import Signup  from "./components/signup/Signup"
-import Signin  from "./components/signin/Signin"
+import Home from './pages/home/Home'
+// import Footer from "./pages/footer/Footer"
+import Header from  "./pages/header/Header"
+import Signup  from "./pages/signup/Signup"
+import Signin  from "./pages/signin/Signin"
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 
@@ -17,12 +17,13 @@ export default function App() {
        <Switch>
              <Route exact path="/" component={Home}/>
              <Route path="/signin"  component={Signin}/>
+             <Route path="/signup" component={Signup}/>
 
        </Switch>
 
 
       {/* home component */}
-       <Signin/>
+       {/* <Signin/> */}
       {/* home component */}
     </div>
   )
