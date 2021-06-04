@@ -23,28 +23,23 @@ dbConnect()
 const server = new ApolloServer({
  typeDefs,
  resolvers,
- context: ({ req }) => {
-  console.log(req)
-  let token
-  if (
-   req.headers.authorization &&
-   req.headers.authorization.startsWith('Bearer')
-  ) {
-   token = req.headers.authorization.split('Bearer ')[1]
+ context: async({req})=>{
+   let token,decode
+  if(req.headers.authorization ){
+    
+     token=req.headers.authorization.split('Bearer ')[1]
   }
-  if (!token) {
-   return new ApolloError('loggin first')
+  if(!token){
+    return
   }
+  decode = jwt.verify(token,process.env.JWT_SECRET)
+  const user=await  User.findOne({_id:decode.id})
+ 
+ return {user}
 
-  const decode = jwt.verify(token, process.env.JWT_SECRET)
-  console.log(decode)
-  return User.find(decode.id)
-   .then((result) => {
-    return result
-   })
-   .catch((err) => new ApolloError(err.message))
-  token && console.log(token)
- },
+     
+ }
+
 })
 
 server.applyMiddleware({ app })

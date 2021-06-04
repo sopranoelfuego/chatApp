@@ -1,4 +1,4 @@
-export const auth = (req, jwt) => {
+export const auth = (req) => {
  const authorization = req.headers.authorization || ''
  let token
  if (
