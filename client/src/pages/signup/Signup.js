@@ -10,13 +10,20 @@ function Signup() {
         username:"",
         email:"",
         password:"",
-        profilePic:""
+        
     }
     const [formData, setformData] = useState(initialState)
 
     const REGISTER_USER=gql`
-      mutation registerUser($input:)
+      mutation registerUser($username:String!,$email:String!,$password:String!){
+          registerUser(username:$username,email:$email,password:$password){
+              _id
+              username
+              email
+          }
+      }
     `
+    const [registerUser,{loading}]=useMutation(REGISTER_USER)
 
     const handleChange=(e)=>setformData({...formData,[e.target.name]:e.target.value})
     
@@ -29,7 +36,7 @@ function Signup() {
     return (
         <div className="container">
              <div className="row">
-                    <div className="col">
+                    <div className="col-sm-8 col-md-6 col-lg-4">
 
                         <form onSubmit={handleSubmit}>
                             <div className="form-group">
