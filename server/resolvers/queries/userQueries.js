@@ -32,11 +32,7 @@ export const login = async (_, { input }, ctx) => {
 export const users = async (_, {},{user}) => {
 
 //  const {user}=con
- console.log("from users",user)
- if(!user){
-   return new AuthenticationError('login first')
-
- }
+ 
  return User.find({})
   .then((result) => {
    return result.map((user) => {

@@ -11,7 +11,7 @@ import colors from 'colors'
 import jwt from 'jsonwebtoken'
 import User from './models/userModel.js'
 import { info } from './utils/log.js'
-
+import cors from 'cors'
 import { typeDefs } from './schemas/index.js'
 import { resolvers } from './resolvers/index.js'
 const app = express()
@@ -42,6 +42,7 @@ const server = new ApolloServer({
  }
 
 })
+app.use(cors())
 
 server.applyMiddleware({ app })
 const PORT = process.env.PORT || 5001

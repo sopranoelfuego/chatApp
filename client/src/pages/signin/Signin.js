@@ -16,10 +16,10 @@ function Signin() {
     }
     return (
         <div className="row p-5">
-            <div className="col-8 bg-secondary">
+            <div className="col-6  bg-secondary">
                 ahsjahsjha
             </div>
-            <div className="col-4">
+            <div className="col-6 ">
 
             <form className="m-5" onSubmit={handleSubmit} >
                  <div className="form-group">

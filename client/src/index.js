@@ -4,15 +4,24 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter as Router} from "react-router-dom"
-import { ApolloClient, InMemoryCache} from '@apollo/client';
+import { ApolloClient, InMemoryCache,gql} from '@apollo/client';
 import {ApolloProvider as Provider} from '@apollo/client/react'
 
 const client = new ApolloClient({
-  uri: 'https://localhost:5000',
+  uri: 'http://localhost:5000/graphql',
   cache: new InMemoryCache()
 });
 
-
+client.query({ 
+  query: gql `
+   query getUsers{
+     users{
+       username 
+       _id
+     }
+   }
+  `
+}).then((result)=>console.log(result))
 ReactDOM.render(
   <Router>
     <Provider client={client}>

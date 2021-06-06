@@ -12,26 +12,29 @@ function Signup() {
         password:"",
         
     }
-    const [formData, setformData] = useState(initialState)
+    const [variables, setvariables] = useState(initialState)
 
     const REGISTER_USER=gql`
-      mutation registerUser($username:String!,$email:String!,$password:String!){
-          registerUser(username:$username,email:$email,password:$password){
+      mutation register($username:String!,$email:String!,$password:String!){
+        register(input:{username:$username,email:$email,password:$password}){
               _id
               username
               email
           }
       }
     `
-    const [registerUser,{loading}]=useMutation(REGISTER_USER)
+    const [registerUser,{loading}]=useMutation(REGISTER_USER,{
+        update(_,res){console.log(res)},
+        onError(err){console.log(err)}
+    })
 
-    const handleChange=(e)=>setformData({...formData,[e.target.name]:e.target.value})
+    const handleChange=(e)=>setvariables({...variables,[e.target.name]:e.target.value})
     
     
     const handleSubmit=(e)=>{
         
         e.preventDefault()
-        console.log(formData)
+       registerUser({variables})
     }
     return (
         <div className="container">

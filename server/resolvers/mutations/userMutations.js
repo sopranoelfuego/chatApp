@@ -15,8 +15,8 @@ export const register = async (_, { input }, { models }) => {
   })
 }
 
-export const deleteUsers = async (_, {}, { models }) => {
- const { User } = models
+export const deleteUsers = async (_, {}, { user }) => {
+ 
  await User.remove({})
 }
 export const deleteUser = async (_, { id }, { models }) => {
