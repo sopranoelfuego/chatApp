@@ -1,7 +1,15 @@
-import { ApolloError } from 'apollo-server-express'
+import { ApolloError, UserInputError } from 'apollo-server-express'
 import User from '../../models/userModel.js'
-export const register = async (_, { input }, { models }) => {
+export const register = async (_, { input }) => {
  const { email, username, password } = input
+ let errors={}
+
+
+ if(email.trim()=== '') errors.email=" email must not be empty..."
+ if(username.trim()=== '') errors.username=" username must not be empty..."
+ if(password==='') errors.password=" password must not be empty..."
+
+ if(Object.keys.length>0) throw new UserInputError('bad input',{errors})
  const user = new User({ email, username, password })
 
  return user

@@ -8,19 +8,28 @@ import {
 import bcrypt from 'bcryptjs'
 
 export const login = async (_, { input }, ctx) => {
- console.log(ctx)
+ 
  const { email, password } = input
-
+ let errors={}
  const user = await User.findOne({ email })
+if(email.trim() ==='')errors.email=" email is empty...."
+
+if(password==='')errors.password=" password is empty...."
+ 
+if(Object.keys(errors).length > 0){
+  throw new UserInputError('input error',{errors})
+}
 
  if (!user) {
-  return new ApolloError('wrong email... or unknow email')
+   errors.email="wrong email..."
+  throw new UserInputError('wrong email... or unknow email',{errors})
  }
  const isMatch = await bcrypt.compare(password, user.password)
  console.log(isMatch)
 
- if (!isMatch) {
-  return new ApolloError('wrong password...')
+ if (!isMatch) { 
+   errors.password="wrong password"
+  throw new UserInputError('wrong password...',{errors})
  }
  return {
   ...user.toJSON(),
