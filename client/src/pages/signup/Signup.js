@@ -5,7 +5,7 @@ import {gql,useMutation} from '@apollo/client'
 //   email,
 //   password,
 //   profilePic
-function Signup() {
+function Signup(props) {
     const initialState={
         username:"",
         email:"",
@@ -24,10 +24,12 @@ function Signup() {
       }
     `
     const [registerUser,{loading}]=useMutation(REGISTER_USER,{
-        update(_,res){console.log(res)},
-        onError(err){
-            console.log(err.graphQLErrors[0].extensions.errors)
-            setErrors(err.graphQLErrors[0].extensions.errors)}
+        // here on "update" we could check for the cache and response from backend mutation success
+        update:(_,res)=>{
+            console.log(res)
+            props.history.push('/signin')
+        },
+        onError:(err)=>setErrors(err.graphQLErrors[0].extensions.errors)
     })
 
     const handleChange=(e)=>setvariables({...variables,[e.target.name]:e.target.value})
@@ -46,22 +48,22 @@ function Signup() {
                         <form onSubmit={handleSubmit}>
                             <div className="form-group">
                                 <label>username</label>
-                                <input type="text" name="username" className="form-control" onChange={handleChange}/>
+                                <input type="text" name="username" className={errors.username ? "form-control is-invalid":"form-control"} onChange={handleChange}/>
                                 <small className="text-danger">{errors && errors.username}</small>
                             </div>
                             <div className="form-group">
                                 <label>email</label>
-                                <input type="email" className="form-control" name="email" onChange={handleChange}/>
+                                <input type="email" className={errors.email?"form-control is-invalid":"form-control"} name="email" onChange={handleChange}/>
                                 <small className="text-danger">{errors && errors.email}</small>
                             </div>
                             
                             <div className="form-group">
                                 <label>password</label>
-                                <input type="password" className="form-control" name="password" onChange={handleChange}/>
+                                <input type="password" className={errors.password?"form-control is-invalid":"form-control"} name="password" onChange={handleChange}/>
                                 <small className="text-danger">{errors && errors.password}</small>
                             </div>
-                                <button className="btn btn-primary" type="submit" disable={loading ?'true':'false'}>{loading?'sending..':"register"}</button>
-                            already have a acount? <Link to="/signin"> click here to login..</Link>
+                                <button className="btn btn-primary" type="submit" disable={loading}>{loading?'sending..':"register"}</button>
+                            already have a acount? <Link to="/login"> click here to login..</Link>
                             
 
                         </form>

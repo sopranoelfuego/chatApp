@@ -1,13 +1,17 @@
 import React from 'react'
 import './index.css'
-function Header() {
+import {useHistory} from "react-router-dom"
+function Header(props) {
+    let history=useHistory()
     return (
         <div className='header__container'>
-                <div>
-                    login
-                </div>
-                <div>chat</div>
-                <div>register</div>
+                <ul className="list">
+                    <li><a>Login</a></li>
+                    <li><a>Chat</a></li>
+                    <li><a>Register</a></li>
+
+
+                </ul>
         </div>
     )
 }
