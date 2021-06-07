@@ -11,17 +11,17 @@ const client = new ApolloClient({
   uri: 'http://localhost:5000/graphql',
   cache: new InMemoryCache()
 });
-
-client.query({ 
-  query: gql `
-   query getUsers{
-     users{
-       username 
-       _id
-     }
-   }
-  `
-}).then((result)=>console.log(result))
+// testing connexion
+// client.query({ 
+//   query: gql `
+//    query getUsers{
+//      users{
+//        username 
+//        _id
+//      }
+//    }
+//   `
+// }).then((result)=>console.log(result)).catch(err=>console.log(err))
 ReactDOM.render(
   <Router>
     <Provider client={client}>

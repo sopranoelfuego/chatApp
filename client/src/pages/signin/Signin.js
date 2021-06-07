@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import {useQuery,gql} from '@apollo/client'
+import {useQuery,gql, useLazyQuery} from '@apollo/client'
 
 
 
 const LOGIN_USER=gql`
    query loginUser($email:String!,$password:String!){
-       login(input:{email:$email}){
+       login(input:{email:$email,password:$password}){
            _id
            username
            email
@@ -15,26 +15,31 @@ const LOGIN_USER=gql`
        }
    }
 `
-
 function Signin() {
     
     const [variables, setvariables] = useState({
         email:"",
         password:""
     })
-    let errors
-//    const [loginUser,{loading}]=useQuery(LOGIN_USER,{
-//        update:(_,res)=>console.log(res),
-//        onError:(err)=>console.log(err.graphQLErrors[0].extensions.errors)
-//    })
+    const [errors, setErrors] = useState({})
+  const [registerUser,{loading}]=useLazyQuery(LOGIN_USER,{
+      onError:(err)=>setErrors(err.graphQLErrors[0].extensions.errors),
+      onCompleted:({login})=>{
+          console.log(login)
+     localStorage.setItem('user',JSON.stringify(login))
+      }
+  })
+
     const handleChange=(e)=>{
         setvariables({...variables,[e.target.name]:e.target.value})
     }
     const handleSubmit=(e)=>{
         e.preventDefault()
-        console.log(variables)
-        // loginUser({variables})
+
+        registerUser({variables})
     }
+  
+  
     return (
         <div className="row p-5">
             <div className="col-6  bg-secondary">
@@ -45,13 +50,13 @@ function Signin() {
             <form className="m-5" onSubmit={handleSubmit} >
                  <div className="form-group">
                      <label>email</label>
-                    <input className="form-control" type="email" name="email" onChange={handleChange}/>
-                    
+                    <input className={errors.email ? "form-control is-invalid":"form-control"} type="email" name="email" onChange={handleChange}/>
+                    <small className="text-danger">{errors && errors.email}</small>
                  </div>
                  <div className="form-group">
                      <label>password</label>
-                    <input className="form-control"type="password" name="password" onChange={handleChange}/>
-                    
+                    <input className={errors.password ? "form-control is-invalid":"form-control"} type="password" name="password" onChange={handleChange}/>
+                    <small className="text-danger">{errors && errors.password}</small>
                  </div>
                  <button type="submit" className="btn btn-primary my-2">sign</button>
                  <div>

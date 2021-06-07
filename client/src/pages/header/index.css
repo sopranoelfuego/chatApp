@@ -1,11 +1,16 @@
+ 
+.header__container{
+    background-color: grey;
+    padding: 15px;
+    margin-top: 10px;
+}
 .list {
     display:flex;
     flex-direction: row;
     justify-content: space-between;
+    color :white
 }
 ul {
    list-style-type: none;
-}
-ul li :hover {
-    color: grey;
+   font-weight: bold;
 }
