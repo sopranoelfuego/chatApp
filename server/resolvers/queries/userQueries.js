@@ -39,7 +39,7 @@ if(Object.keys(errors).length > 0){
 }
 
 export const users = async (_, {},{user}) => {
- 
+ console.log("user logged",user)
  if(!user){
    errors.authError="login first"
     throw new AuthenticationError('unauthenticated')

@@ -8,7 +8,7 @@ import { v4 as uuidv4 } from 'uuid';
 export const sendMessage=async (_, {input},{user})=>{
     if(!user)throw new AuthenticationError('unauthenticated')
     const {to,content}=input
-    console.log(to,content)
+   
     if( user.email==to){
         return new ApolloError('error u cannot send sms to yourself...')
      }
@@ -23,7 +23,7 @@ export const sendMessage=async (_, {input},{user})=>{
         message.from=user.email
         message.uuid=uuidv4()
        return message.save().then(message =>{
-            console.log(message)
+            // console.log(message)
                 return {...message.toJSON(),createdAt:message.createdAt.toISOString()}
         }).catch(err => { 
             console.log(err.message)

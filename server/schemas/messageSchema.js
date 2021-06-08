@@ -7,9 +7,11 @@ type Message {
     content:String!
     to:String!
     from:String! 
+    createdAt:String!
+    updatedAt:String!
 }
   
-input inputSendMessage{
+input inputMessage{
     to:String!
     content:String
 
@@ -18,10 +20,10 @@ input inputSendMessage{
 
 export const queries=`
 
-  message:[Message]
+  inbox(from:String):[Message]
 
 `
 export const mutations=`
 
-  sendMessage(input:inputSendMessage!):Message
+  sendMessage(input:inputMessage!):Message
 `

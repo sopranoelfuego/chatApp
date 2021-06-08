@@ -14,7 +14,7 @@ export const auth = async(context) => {
     }
     decode = jwt.verify(token,process.env.JWT_SECRET)
     const user=await  User.findOne({_id:decode.id})
-   
+//    console.log("user from auth middlware",user)
    return {user}
   
       
