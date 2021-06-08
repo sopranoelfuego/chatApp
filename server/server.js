@@ -6,12 +6,13 @@ import {
 } from 'apollo-server-express'
 import express from 'express'
 import dotenv from 'dotenv'
+import cors from 'cors'
+
 import dbConnect from './config/db.js'
 import colors from 'colors'
-import jwt from 'jsonwebtoken'
 import User from './models/userModel.js'
 import { info } from './utils/log.js'
-import cors from 'cors'
+import {auth} from './utils/auth.js'
 import { typeDefs } from './schemas/index.js'
 import { resolvers } from './resolvers/index.js'
 const app = express()
@@ -23,23 +24,7 @@ dbConnect()
 const server = new ApolloServer({
  typeDefs,
  resolvers,
- context: async({req})=>{
-   let token,decode
-
-  if(req.headers.authorization ){
-    
-     token=req.headers.authorization.split('Bearer ')[1]
-  }
-  if(!token){
-    return
-  }
-  decode = jwt.verify(token,process.env.JWT_SECRET)
-  const user=await  User.findOne({_id:decode.id})
- 
- return {user}
-
-     
- }
+ context: auth
 
 })
 app.use(cors())

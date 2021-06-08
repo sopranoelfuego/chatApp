@@ -1,3 +1,3 @@
 import { register, deleteUser, deleteUsers } from './userMutations.js'
-
-export default { register, deleteUser, deleteUsers }
+import {sendMessage} from './messageMutations.js'
+export default { register, deleteUser, deleteUsers,sendMessage }

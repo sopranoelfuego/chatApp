@@ -1,11 +1,12 @@
 import { gql } from 'apollo-server-express'
 import * as user from './userSchema.js'
+import * as message from './messageSchema.js'
 
 const types = []
 const queries = []
 const mutations = []
 
-const schemas = [user]
+const schemas = [user,message]
 
 schemas.forEach((single) => {
  types.push(single.types)

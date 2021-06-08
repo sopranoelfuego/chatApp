@@ -6,7 +6,7 @@ function Header(props) {
     return (
         <div className='header__container'>
                 <ul className="list">
-                    <li><a>Login</a></li>
+                    <a><li>Login</li></a>
                     <li><a>Chat</a></li>
                     <li><a>Register</a></li>
 
