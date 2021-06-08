@@ -24,7 +24,7 @@ function Signup(props) {
       }
     `
     const [registerUser,{loading}]=useMutation(REGISTER_USER,{
-        // here on "update" we could check for the cache and response from backend mutation success
+        
         update:(_,res)=>{
             console.log(res)
             props.history.push('/signin')
