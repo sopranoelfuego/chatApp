@@ -18,7 +18,7 @@ const authReducer=(state,action)=>{
 
 }
 
-export const authProvider=({children})=>{
+export const AuthProvider=({children})=>{
 
 
     const [state,dispatch]=useReducer(authReducer,{user:null})
@@ -31,3 +31,6 @@ export const authProvider=({children})=>{
         </AuthDispatchContext.Provider>
     )
 }
+
+export const useAuthState=()=>useContext(AuthStateContext)
+export const useAuthDispatch=()=>useContext(AuthDispatchContext)

@@ -6,27 +6,18 @@ import reportWebVitals from './reportWebVitals';
 import {BrowserRouter as Router} from "react-router-dom"
 import { ApolloClient, InMemoryCache,gql} from '@apollo/client';
 import {ApolloProvider as Provider} from '@apollo/client/react'
-
+import {AuthProvider} from './resolvers/protect/auth.js'
 const client = new ApolloClient({
   uri: 'http://localhost:5000/graphql',
   cache: new InMemoryCache()
 });
-// testing connexion
-// client.query({ 
-//   query: gql `
-//    query getUsers{
-//      users{
-//        username 
-//        _id
-//      }
-//    }
-//   `
-// }).then((result)=>console.log(result)).catch(err=>console.log(err))
+
 ReactDOM.render(
   <Router>
     <Provider client={client}>
-
-    <App />
+       <AuthProvider>
+          <App />
+       </AuthProvider>,
     </Provider>
   </Router>,
   document.getElementById('root')
