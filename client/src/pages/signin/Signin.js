@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import {useQuery,gql, useLazyQuery} from '@apollo/client'
-
+import {gql, useLazyQuery} from '@apollo/client'
+import {useAuthDispatch} from '../../components/context/auth.js'
+import {LOGIN} from '../../components/context/types.js'
 
 
 const LOGIN_USER=gql`
@@ -21,12 +22,14 @@ function Signin() {
         email:"",
         password:""
     })
+    const dispatch=useAuthDispatch()
     const [errors, setErrors] = useState({})
   const [registerUser,{loading}]=useLazyQuery(LOGIN_USER,{
-      onError:(err)=>setErrors(err.graphQLErrors[0].extensions.errors),
+      onError:(err)=>err.graphQLErrors[0] != null ? setErrors(err.graphQLErrors[0].extensions.errors):setErrors({connexion:"connection error.."}),
       onCompleted:({login})=>{
           console.log(login)
-     localStorage.setItem('user',JSON.stringify(login))
+        dispatch({type:LOGIN,payload:login})
+
       }
   })
 
@@ -38,7 +41,7 @@ function Signin() {
 
         registerUser({variables})
     }
-  
+    errors?.connexion && <p>check your connexion</p>
   
     return (
         <div className="row p-5">
@@ -58,7 +61,7 @@ function Signin() {
                     <input className={errors.password ? "form-control is-invalid":"form-control"} type="password" name="password" onChange={handleChange}/>
                     <small className="text-danger">{errors && errors.password}</small>
                  </div>
-                 <button type="submit" className="btn btn-primary my-2">sign</button>
+                 <button type="submit" className="btn btn-primary my-2" disabled={loading}>sign</button>
                  <div>
                      you are new create a account? <Link to="/register">register now</Link>
                  </div>
