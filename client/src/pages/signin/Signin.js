@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { gql, useLazyQuery } from '@apollo/client'
 import { useAuthDispatch } from '../../components/context/auth.js'
 import { LOGIN } from '../../components/context/types.js'
@@ -19,6 +19,7 @@ function Signin() {
   email: '',
   password: '',
  })
+ const history = useHistory()
  const dispatch = useAuthDispatch()
  const [errors, setErrors] = useState({})
  const [registerUser, { loading }] = useLazyQuery(LOGIN_USER, {
@@ -27,8 +28,8 @@ function Signin() {
     ? setErrors(err.graphQLErrors[0].extensions.errors)
     : setErrors({ connexion: 'connection error..' }),
   onCompleted: ({ login }) => {
-   console.log('from signin page', login)
    dispatch({ type: LOGIN, payload: login })
+   history.push('/')
   },
  })
 
