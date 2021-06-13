@@ -1,0 +1,16 @@
+.home_container {
+ display: flex !important;
+ justify-content: space-around;
+ background-color: blue;
+ margin: 0 20px 0 20px;
+ padding-top: 10px;
+ align-self: center;
+}
+.left_container {
+ background-color: cyan;
+ border-right: solid 2px grey;
+ border-height: 100vh;
+}
+.right_container {
+ background-color: chocolate;
+}

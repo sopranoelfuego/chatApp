@@ -16,7 +16,7 @@ function Header(props) {
      </Link>
     </li>
     <li onClick={() => localStorage.removeItem('user')}>
-     <Link to="/logout">
+     <Link to="/login">
       <h4>logout</h4>
      </Link>
     </li>

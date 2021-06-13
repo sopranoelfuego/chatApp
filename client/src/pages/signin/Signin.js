@@ -23,10 +23,14 @@ function Signin() {
  const dispatch = useAuthDispatch()
  const [errors, setErrors] = useState({})
  const [registerUser, { loading }] = useLazyQuery(LOGIN_USER, {
-  onError: (err) =>
+  onError: (err) => {
    err.graphQLErrors[0] != null
     ? setErrors(err.graphQLErrors[0].extensions.errors)
-    : setErrors({ connexion: 'connection error..' }),
+    : setErrors({ connexion: 'connection error..' })
+   setTimeout(() => {
+    setErrors(null)
+   }, 2000)
+  },
   onCompleted: ({ login }) => {
    dispatch({ type: LOGIN, payload: login })
    history.push('/')
@@ -51,7 +55,9 @@ function Signin() {
      <div className="form-group">
       <label>email</label>
       <input
-       className={errors.email ? 'form-control is-invalid' : 'form-control'}
+       className={
+        errors && errors.email ? 'form-control is-invalid' : 'form-control'
+       }
        type="email"
        name="email"
        onChange={handleChange}
@@ -61,7 +67,9 @@ function Signin() {
      <div className="form-group">
       <label>password</label>
       <input
-       className={errors.password ? 'form-control is-invalid' : 'form-control'}
+       className={
+        errors && errors.password ? 'form-control is-invalid' : 'form-control'
+       }
        type="password"
        name="password"
        onChange={handleChange}

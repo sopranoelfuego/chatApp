@@ -22,9 +22,8 @@ let user = null
 
 let userFromStorage = JSON.parse(localStorage.getItem('user'))
 if (userFromStorage) {
- console.log('formated to the json', userFromStorage)
  const token = jwtDecode(userFromStorage.token)
- console.log('this is the token', token)
+
  // HERE I  JST WANT TO BE SURE IF THE SESSION HASN'T ENDED..
  if (token) {
   const isExpired = new Date(token.exp * 1000)
