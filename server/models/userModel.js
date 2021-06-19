@@ -7,10 +7,10 @@ const userSchema = new mongoose.Schema(
    type: String,
    required: [true, 'username please'],
   },
-//   username,
-//   email,
-//   password,
-//   profilePic
+  //   username,
+  //   email,
+  //   password,
+  //   profilePic
   email: {
    type: String,
    unique: true,
@@ -20,7 +20,11 @@ const userSchema = new mongoose.Schema(
     'please enter a valid email',
    ],
   },
-  profilePic:String,
+  profilePic: {
+   type: String,
+   default:
+    'https://www.google.com/imgres?imgurl=https%3A%2F%2Fstatic.toiimg.com%2Fthumb%2Fresizemode-4%2Cmsid-76729750%2Cimgsize-249247%2Cwidth-720%2F76729750.jpg&imgrefurl=https%3A%2F%2Fwww.gadgetsnow.com%2Fhow-to%2Fhow-to-create-your-own-facebook-avatars-and-share-it-with-friends%2Farticleshow%2F76729536.cms&tbnid=D3-OAZu4VtdNEM&vet=12ahUKEwiX44LP1p3xAhUS-BoKHT3zD5wQMygEegUIARCvAQ..i&docid=agDrkAJLkdATCM&w=720&h=540&q=avatar%20pic&ved=2ahUKEwiX44LP1p3xAhUS-BoKHT3zD5wQMygEegUIARCvAQ',
+  },
   password: {
    type: String,
    required: [true, 'password please'],

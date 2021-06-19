@@ -9,7 +9,7 @@ const Authorization = (props) => {
   return <Redirect to="/login" />
  } else if (props.public && user) {
   return <Redirect to="/" />
- } else if (props.public && !user) {
+ } else {
   return <Route component={props.component} {...props} />
  }
 }

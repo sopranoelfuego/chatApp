@@ -1,7 +1,8 @@
 import React from 'react'
 import './index.css'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 function Header(props) {
+ const history = useHistory()
  return (
   <div className="header__container">
    <ul className="list">
@@ -15,7 +16,13 @@ function Header(props) {
       <h4>Chat</h4>
      </Link>
     </li>
-    <li onClick={() => localStorage.removeItem('user')}>
+    <li
+     onClick={() => {
+      localStorage.removeItem('user')
+
+      history.push('/login')
+     }}
+    >
      <Link to="/login">
       <h4>logout</h4>
      </Link>

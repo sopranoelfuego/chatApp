@@ -23,8 +23,8 @@ function Signin() {
  const dispatch = useAuthDispatch()
  const [errors, setErrors] = useState({})
  const [registerUser, { loading }] = useLazyQuery(LOGIN_USER, {
-  onError: (err) => {
-   err.graphQLErrors[0] != null
+  onError: err => {
+   err.graphQLErrors[0] !== null
     ? setErrors(err.graphQLErrors[0].extensions.errors)
     : setErrors({ connexion: 'connection error..' })
    setTimeout(() => {
@@ -37,10 +37,10 @@ function Signin() {
   },
  })
 
- const handleChange = (e) => {
+ const handleChange = e => {
   setvariables({ ...variables, [e.target.name]: e.target.value })
  }
- const handleSubmit = (e) => {
+ const handleSubmit = e => {
   e.preventDefault()
 
   registerUser({ variables })
