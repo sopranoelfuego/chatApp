@@ -8,28 +8,27 @@ import {
 import bcrypt from 'bcryptjs'
 
 export const login = async (_, { input }, ctx) => {
- 
  const { email, password } = input
- let errors={}
+ let errors = {}
  const user = await User.findOne({ email })
-if(email.trim() ==='')errors.email=" email is empty...."
+ if (email.trim() === '') errors.email = ' email is empty....'
 
-if(password==='')errors.password=" password is empty...."
- 
-if(Object.keys(errors).length > 0){
-  throw new UserInputError('input error',{errors})
-}
+ if (password === '') errors.password = ' password is empty....'
+
+ if (Object.keys(errors).length > 0) {
+  throw new UserInputError('input error', { errors })
+ }
 
  if (!user) {
-   errors.email="wrong email..."
-  throw new UserInputError('wrong email... or unknow email',{errors})
+  errors.email = 'wrong email...'
+  throw new UserInputError('wrong email... or unknow email', { errors })
  }
  const isMatch = await bcrypt.compare(password, user.password)
  console.log(isMatch)
 
- if (!isMatch) { 
-   errors.password="wrong password"
-  throw new UserInputError('wrong password...',{errors})
+ if (!isMatch) {
+  errors.password = 'wrong password'
+  throw new UserInputError('wrong password...', { errors })
  }
  return {
   ...user.toJSON(),
@@ -38,29 +37,37 @@ if(Object.keys(errors).length > 0){
  }
 }
 
-export const users = async (_, {},{user}) => {
- console.log("user logged",user)
- if(!user){
-   errors.authError="login first"
-    throw new AuthenticationError('unauthenticated')
+export const users = async (_, {}, { user }) => {
+ console.log('user logged', user)
+ if (!user) {
+  errors.authError = 'login first'
+  throw new AuthenticationError('unauthenticated')
  }
- 
+
  return User.find({})
-  .then((result) => {
-   return result.map((user) => {
-    return { ...user.toJSON(), createdAt: user.createdAt.toISOString() }
+  .then(result => {
+   return result.map(user => {
+    return {
+     ...user.toJSON(),
+     createdAt: user.createdAt.toISOString(),
+    }
    })
   })
-  .catch((err) => new ApolloError(err.err))
+  .catch(err => new ApolloError(err.err))
 }
 
+export const getMe = async (_, {}, { user }) => {
+ if (!user) {
+  throw new AuthenticationError('unauthenticated')
+ } else return user
+}
 export const user = async (_, { id }, context) => {
  return User.findById(id)
-  .then((user) => {
+  .then(user => {
    return (
     { ...user.toJSON(), createdAt: user.createdAt.toISOString() } ||
     new ValidationError('there is no user with such id')
    )
   })
-  .catch((err) => new ApolloError(err.message))
+  .catch(err => new ApolloError(err.message))
 }

@@ -19,7 +19,7 @@ function Home() {
  }
  if (data) {
   console.log(data)
-  displayUsers = data.users.map((user) => (
+  displayUsers = data.users.map(user => (
    <div key={user._id} className="chat">
     <p>{user.username}</p>
    </div>

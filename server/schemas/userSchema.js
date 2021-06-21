@@ -7,6 +7,7 @@ export const types = `
       password:String!
       imageUrl:String
       token:String
+      latestMessage:Message
       createdAt:String
       updatedAt:String
       
@@ -31,6 +32,7 @@ export const queries = `
     user(id:ID):User!
     users:[User]!
     login(input:loginUser!):User!
+    getMe:User!
     
     
 
