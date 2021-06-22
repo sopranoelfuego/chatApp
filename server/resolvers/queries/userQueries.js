@@ -1,4 +1,5 @@
 import User from '../../models/userModel.js'
+import Message from '../../models/messageModel.js'
 import {
  ApolloError,
  ValidationError,
@@ -44,11 +45,21 @@ export const users = async (_, {}, { user }) => {
   throw new AuthenticationError('unauthenticated')
  }
 
+ const allMessagesAttachedToUser = await Message.find({
+  $or: [{ from: user.email }, { to: user.email }],
+ }).sort('-createdAt')
+
  return User.find({})
   .then(result => {
-   return result.map(user => {
+   return result.map(us => {
+    const latestMessage = allMessagesAttachedToUser.find(
+     sms => sms.from === us.email || sms.to === us.email
+    )
+    console.log('this is the latest message', latestMessage)
+    us.latestMessage = latestMessage
     return {
      ...user.toJSON(),
+     latestMessage,
      createdAt: user.createdAt.toISOString(),
     }
    })
