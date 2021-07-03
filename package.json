@@ -1,0 +1,33 @@
+{
+ "name": "chat",
+ "version": "1.0.0",
+ "description": "",
+ "main": "index.js",
+ "type": "module",
+ "dependencies": {
+  "apollo-server-express": "^2.24.0",
+  "bcryptjs": "^2.4.3",
+  "bootstrap": "^4.6.0",
+  "colors": "^1.4.0",
+  "cors": "^2.8.5",
+  "dotenv": "^9.0.2",
+  "express": "^4.17.1",
+  "graphql": "^15.5.0",
+  "jsonwebtoken": "^8.5.1",
+  "mongoose": "^5.12.9",
+  "react-bootstrap": "^1.6.1",
+  "uuid": "^8.3.2"
+ },
+ "devDependencies": {
+  "concurrently": "^6.0.0",
+  "nodemon": "^2.0.7"
+ },
+ "scripts": {
+  "test": "echo \"Error: no test specified\" && exit 1",
+  "backend": "nodemon server/server.js ",
+  "frontend": "npm run start --prefix client\" ",
+  "dev": "concurrently \"npm run backend\" \"npm run start --prefix client\""
+ },
+ "author": "sopranoelfuego",
+ "license": "ISC"
+}

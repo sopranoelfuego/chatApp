@@ -1,0 +1,25 @@
+.header__container {
+ background-color: grey;
+ padding: 15px;
+ margin-top: 10px;
+}
+.list {
+ display: flex;
+ flex-direction: row;
+ justify-content: space-between;
+ color: white;
+}
+ul {
+ list-style-type: none;
+ font-weight: bold;
+}
+li {
+ cursor: pointer;
+}
+li a {
+ text-decoration: none;
+ color: white;
+}
+li a:hover h4 {
+ color: lightblue;
+}

@@ -1,0 +1,12 @@
+.container {
+ display: flex;
+}
+.chat__container {
+ flex: 3.5;
+}
+.inbox__container {
+ flex: 5.5;
+}
+.online__container {
+ flex: 3;
+}
